@@ -3,11 +3,11 @@
 import TodoItem from './TodoItems';
 
 const TodosList = (props) => {
-  const { todosProps, setTodos } = props;
+  const { todosProps, handleChange, delTodo } = props;
   return (
     <ul>
       {todosProps.map((todo) => (
-        <TodoItem key={todo.id} itemProp={todo} setTodos={setTodos} />
+        <TodoItem key={todo.id} itemProp={todo} handleChange={handleChange} delTodo={delTodo} />
       ))}
     </ul>
   );

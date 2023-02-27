@@ -3,7 +3,7 @@ import InputTodo from './InputTodo';
 import TodosList from './TodosList';
 
 const TodosLogic = () => {
-  const [todos] = useState([
+  const [todos, setTodos] = useState([
     {
       id: 1,
       title: 'Setup development environment',
@@ -21,10 +21,42 @@ const TodosLogic = () => {
     },
   ]);
 
+  const handleChange = (id) => {
+    setTodos((prevState) => prevState.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      }
+      return todo;
+    }));
+  };
+
+  const addTodoItem = (title) => {
+    // update state with user's input
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+  };
+
+  const delTodo = (id) => {
+    setTodos([
+      ...todos.filter((todo) => todo.id !== id),
+    ]);
+  };
+
   return (
     <div>
-      <InputTodo />
-      <TodosList todosProps={todos} />
+      <InputTodo addTodoItem={addTodoItem} />
+      <TodosList
+        todosProps={todos}
+        handleChange={handleChange}
+        delTodo={delTodo}
+      />
     </div>
   );
 };
